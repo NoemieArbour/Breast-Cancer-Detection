@@ -25,6 +25,9 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
+# PARAMETERS
+N_ITERATIONS_MAX = 5000
+LR = 0.085
 
 def sigmoid(x):
     return 1 / (1 + (math.e ** -x))
@@ -89,15 +92,14 @@ def compute_gradient_logistic(X, y, w, b):
 
 
 # Trained data
-x_t, y_t = load_data("data.csv")
+x_t, y_t = load_data("data\cleaned_data.csv")
 x_train = np.array(x_t[0:400:1])
 y_train = np.array(y_t[0:400:1])
 
 x_test = np.array(x_t[400:])
 y_test = np.array(y_t[400:])
 
-# Parameters
-lr = 0.085
+# Weights init
 weights = np.zeros(x_train.shape[1])
 bias = 0.
 
@@ -106,7 +108,7 @@ n_epoch = 0
 calculated_cost = 0.
 cost_history = []
 
-while n_epoch < 5000:
+while n_epoch < N_ITERATION_MAX:
     t_w = np.zeros(x_train.shape[1])
     loss_w = 0
     loss_b = 0
@@ -115,8 +117,8 @@ while n_epoch < 5000:
     dj_db, dj_dw = compute_gradient_logistic(x_train, y_train, weights, bias)
 
     # Update Parameters using w, b, alpha and gradient
-    weights -= lr * dj_dw
-    bias -= lr * dj_db
+    weights -= LR * dj_dw
+    bias -= LR * dj_db
 
     calculated_cost = cost(x_train, y_train, weights, bias)
     cost_history.append(calculated_cost)
