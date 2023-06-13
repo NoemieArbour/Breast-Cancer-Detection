@@ -26,8 +26,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # PARAMETERS
-N_ITERATIONS_MAX = 5000
-LR = 0.085
+FILEPATH = "data/cleaned_data.csv"
+N_ITERATIONS_MAX = 500
+LR = 0.0775
+TRAINING_PERCENTAGE = 0.8
+MALIGNANT_THRESHOLD = 0.33
+
 
 def sigmoid(x):
     return 1 / (1 + (math.e ** -x))
@@ -92,12 +96,15 @@ def compute_gradient_logistic(X, y, w, b):
 
 
 # Trained data
-x_t, y_t = load_data("data\cleaned_data.csv")
-x_train = np.array(x_t[0:400:1])
-y_train = np.array(y_t[0:400:1])
+x_t, y_t = load_data(FILEPATH)
 
-x_test = np.array(x_t[400:])
-y_test = np.array(y_t[400:])
+n_trained_values = int(len(x_t)*TRAINING_PERCENTAGE)
+
+x_train = np.array(x_t[0:n_trained_values:1])
+y_train = np.array(y_t[0:n_trained_values:1])
+
+x_test = np.array(x_t[n_trained_values:])
+y_test = np.array(y_t[n_trained_values:])
 
 # Weights init
 weights = np.zeros(x_train.shape[1])
@@ -108,7 +115,8 @@ n_epoch = 0
 calculated_cost = 0.
 cost_history = []
 
-while n_epoch < N_ITERATION_MAX:
+while n_epoch < N_ITERATIONS_MAX:
+    # Init at zeros
     t_w = np.zeros(x_train.shape[1])
     loss_w = 0
     loss_b = 0
@@ -120,12 +128,26 @@ while n_epoch < N_ITERATION_MAX:
     weights -= LR * dj_dw
     bias -= LR * dj_db
 
+    # Calculate the cost and store it in the cost history
     calculated_cost = cost(x_train, y_train, weights, bias)
     cost_history.append(calculated_cost)
-    n_epoch += 1
 
+    n_epoch += 1
     print("Epoch: " + str(n_epoch) + " | Calculated cost: " + str(calculated_cost))
 
+# Print the parameters' weights and the bias
+print("\nFinal model parameters: " + str(weights[0]) + "(Clump Thickness) \n+ "
+      + str(weights[1]) + "(Uniformity of Cell Size) \n+ "
+      + str(weights[2]) + "(Uniformity of Cell Shape) \n+ "
+      + str(weights[3]) + "(Marginal Adhesion) \n+ "
+      + str(weights[4]) + "(Single Epithelial Cell Size) \n+ "
+      + str(weights[5]) + "(Bare Nuclei) \n+ "
+      + str(weights[6]) + "(Bland Chromatin) \n+ "
+      + str(weights[7]) + "(Normal Nucleoli) \n+ "
+      + str(weights[8]) + "(Mitoses) \n+ "
+      + str(bias) + '\n')
+
+# Calculate the success rate of the trained model
 n_trials = x_test.shape[0]
 n_success = 0
 
@@ -138,19 +160,20 @@ for i in range(n_trials):
         n_malignant += 1
     if predict(x_test[i], weights, bias, 0.5) == y_test[i]:
         n_success += 1
-    if predict(x_test[i], weights, bias, 0.25):
+    if predict(x_test[i], weights, bias, MALIGNANT_THRESHOLD):
         if y_test[i]:
             n_malignant_detected += 1
         else:
             n_false_malignant += 1
 
-success_rate = n_success/n_trials
-print("Success rate: " + str(success_rate))
-print("Final model parameters: " + str(weights) + " + " + str(bias) + '\n')
+success_rate = n_success / n_trials * 100
+print("Success rate: " + str(success_rate) + "%")
 
-detection_rate = n_malignant_detected/n_malignant
-print("Detection rate of with 25% assurance requested : " + str(detection_rate))
-print("Within those, " + str(n_false_malignant) + " were benign.")
+detection_rate = n_malignant_detected / n_malignant * 100
+print("Detection rate with a " + str(MALIGNANT_THRESHOLD * 100)
+      + "% threshold : " + str(detection_rate) + "%")
+print("Within those, " + str(n_false_malignant) + " were benign (False positives).")
 
+# Plot the cost history
 plt.plot(cost_history)
 plt.show()
