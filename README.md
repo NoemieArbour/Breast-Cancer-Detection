@@ -8,7 +8,7 @@ This project uses the Breast Cancer Wisconsin's dataset :
 Wolberg,WIlliam. (1992). Breast Cancer Wisconsin (Original). 
 UCI Machine Learning Repository. https://doi.org/10.24432/C5HP4Z.
 
-###Attribute Information:
+### Attribute Information:
 
 1. Sample code number:            id number
 2. Clump Thickness:               1 - 10
@@ -23,7 +23,7 @@ UCI Machine Learning Repository. https://doi.org/10.24432/C5HP4Z.
 11. Class:                        (2 for benign, 4 for malignant)
 
 
-###Class distribution:
+### Class distribution:
 357 benign, 212 malignant
 
 ## The model after 500 Epoch
@@ -38,7 +38,7 @@ UCI Machine Learning Repository. https://doi.org/10.24432/C5HP4Z.
 + 0.005511260639835064(Mitoses) 
 + -2.895198671336623
 
-###Success rate:
+### Success rate:
 100.0% success rate with the 50% standard threshold.
 
 Detection rate with a 33.0% threshold : 100.0%
