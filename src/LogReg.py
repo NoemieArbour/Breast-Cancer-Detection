@@ -27,7 +27,7 @@ import matplotlib.pyplot as plt
 
 # PARAMETERS
 FILEPATH = "data/cleaned_data.csv"
-N_ITERATIONS_MAX = 500
+N_STEPS_MAX = 500
 LR = 0.0775
 TRAINING_PERCENTAGE = 0.8
 MALIGNANT_THRESHOLD = 0.33
@@ -111,11 +111,11 @@ weights = np.zeros(x_train.shape[1])
 bias = 0.
 
 # Gradient descent
-n_epoch = 0
+n_step = 0
 calculated_cost = 0.
 cost_history = []
 
-while n_epoch < N_ITERATIONS_MAX:
+while n_epoch < N_STEPS_MAX:
     # Init at zeros
     t_w = np.zeros(x_train.shape[1])
     loss_w = 0
@@ -132,8 +132,8 @@ while n_epoch < N_ITERATIONS_MAX:
     calculated_cost = cost(x_train, y_train, weights, bias)
     cost_history.append(calculated_cost)
 
-    n_epoch += 1
-    print("Epoch: " + str(n_epoch) + " | Calculated cost: " + str(calculated_cost))
+    n_step += 1
+    print("Step: " + str(n_step) + " | Calculated cost: " + str(calculated_cost))
 
 # Print the parameters' weights and the bias
 print("\nFinal model parameters: " + str(weights[0]) + "(Clump Thickness) \n+ "
