@@ -27,16 +27,7 @@ UCI Machine Learning Repository. https://doi.org/10.24432/C5HP4Z.
 357 benign, 212 malignant
 
 ## The model after 500 Epoch
-0.01916491430879707(Clump Thickness) 
-+ 0.37425648415565776(Uniformity of Cell Size) 
-+ 0.21874139774741086(Uniformity of Cell Shape) 
-+ 0.0955157344456059(Marginal Adhesion) 
-+ -0.23664342873248626(Single Epithelial Cell Size) 
-+ 0.38071240214538704(Bare Nuclei) 
-+ -0.21721946447576623(Bland Chromatin) 
-+ 0.215041519143409(Normal Nucleoli) 
-+ 0.005511260639835064(Mitoses) 
-+ -2.895198671336623
+0.01916491430879707(Clump Thickness) + 0.37425648415565776(Uniformity of Cell Size) + 0.21874139774741086(Uniformity of Cell Shape) + 0.0955157344456059(Marginal Adhesion) + -0.23664342873248626(Single Epithelial Cell Size) + 0.38071240214538704(Bare Nuclei) + -0.21721946447576623(Bland Chromatin) + 0.215041519143409(Normal Nucleoli) + 0.005511260639835064(Mitoses) + -2.895198671336623
 
 ### Success rate:
 100.0% success rate with the 50% standard threshold.
